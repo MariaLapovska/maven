@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="CR1" author="mariia.lapovska">
+        <comment>Table created: flower(id, flower_name, price).</comment>
+        <createTable tableName="flower">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="flower_name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="CR2" author="mariia.lapovska">
+        <comment>Table created: color(color_name, flower_id).</comment>
+        <createTable tableName="color">
+            <column name="color_name" type="VARCHAR(100)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="flower_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="FK1" author="mariia.lapovska">
+        <comment>FK added flower.id -> color.flower_id.</comment>
+        <addForeignKeyConstraint
+                referencedTableName="flower"
+                referencedColumnNames="id"
+                constraintName="FK_flower_color"
+                baseTableName="color"
+                baseColumnNames="flower_id"/>
+    </changeSet>
+
+    <changeSet id="IN1" author="mariia.lapovska">
+        <comment>Data inserted into flower table.</comment>
+        <insert tableName="flower">
+            <column name="flower_name" value="rose"/>
+            <column name="price" value="15"/>
+        </insert>
+        <insert tableName="flower">
+            <column name="flower_name" value="tulip"/>
+            <column name="price" value="9"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="IN2" author="mariia.lapovska">
+        <comment>Data inserted into color table.</comment>
+        <insert tableName="color">
+            <column name="color_name" value="red"/>
+            <column name="flower_id" value="1"/>
+        </insert>
+        <insert tableName="color">
+            <column name="color_name" value="yellow"/>
+            <column name="flower_id" value="2"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
