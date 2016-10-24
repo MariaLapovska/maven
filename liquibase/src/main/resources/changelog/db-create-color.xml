@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="CR2" author="mariia.lapovska">
+        <comment>Table created: color(color_name, flower_id).</comment>
+        <createTable tableName="color">
+            <column name="color_name" type="VARCHAR(100)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="flower_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="FK1" author="mariia.lapovska">
+        <comment>FK added flower.id -> color.flower_id.</comment>
+        <addForeignKeyConstraint
+                referencedTableName="flower"
+                referencedColumnNames="id"
+                constraintName="FK_flower_color"
+                baseTableName="color"
+                baseColumnNames="flower_id"/>
+    </changeSet>
+
+</databaseChangeLog>
